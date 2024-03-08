@@ -1,0 +1,22 @@
+{
+  "name": "newconsolecornerr",
+  "version": "1.0.0",
+  "description": "console corner",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ediaz029/ConsoleCorner.git"
+  },
+  "author": "C.E.R",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ediaz029/ConsoleCorner/issues"
+  },
+  "homepage": "https://github.com/ediaz029/ConsoleCorner#readme",
+  "dependencies": {
+    "express": "^4.18.3"
+  }
+}
