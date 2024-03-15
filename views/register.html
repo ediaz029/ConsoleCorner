@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Page</title>
+    <link rel="stylesheet" href="/stylesheets/styles.css">
+    <script src="https://kit.fontawesome.com/a8e3054785.js" crossorigin="anonymous"></script> 
+</head>
+<body>
+    <h1>Register</h1>
+    <form action="/register" method="POST">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address."><br><br>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required><br><br>
+        
+        <input type="submit" value="Register">
+    </form>
+</body>
+</html>

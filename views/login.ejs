@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Login</title>
+    <link rel="stylesheet" href="/stylesheets/styles.css">
+    <script src="https://kit.fontawesome.com/a8e3054785.js" crossorigin="anonymous"></script> 
+</head>
+<body>
+    <div class="container">
+        <h1>User Login</h1>
+
+        <% if (typeof errorMessage !== 'undefined') { %>
+            <p><%= errorMessage %></p>
+        <% } %>
+        
+        <form action="/login" method="POST">
+            <label for="username">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password">
+            
+            <button type="submit">Login</button>
+        </form>
+        
+        <p>Not registered yet? <a href="register">Register here</a></p>
+    </div>
+    </body>
+</html>
