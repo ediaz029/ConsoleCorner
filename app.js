@@ -5,11 +5,10 @@ const app = express();
 const mongoose = require('mongoose');
 const User = require('./models/User');
 const bodyParser = require('body-parser');
-const uri = "mongodb+srv://ediazj03:rT2LNVMxD1foz2vo@cluster0.boethos.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 app.set('view engine', 'ejs');
 const session = require('express-session');
 
-mongoose.connect(uri)
+mongoose.connect(process.env.uri)
   .then(() => console.log('Database connected!'))
   .catch(err => console.log(err));
 
@@ -67,8 +66,6 @@ app.post('/register', function(req, res) {
         if (err) {
           return res.render('login', { errorMessage: 'Error logging in.' });
         }
-  
-        // Set any session data here, e.g.:
         req.session.userId = user._id;
   
         res.redirect('/index');
