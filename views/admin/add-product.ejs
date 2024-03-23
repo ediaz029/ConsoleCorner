@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add New Product</title>
+  <link rel="stylesheet" href="/stylesheets/styles.css">
+  <script src="https://kit.fontawesome.com/a8e3054785.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <h1>Add New Product</h1>
+  <form action="/admin/add-product" method="post" enctype="multipart/form-data">
+    <label for="name">Title:</label><br>
+    <input type="text" id="name" name="name" required><br>
+    <label for="price">Price:</label><br>
+    <input type="number" id="price" name="price" step="0.01" required><br>
+    <label for="image">Image:</label><br>
+    <input type="file" id="image" name="image" accept="image/*" required><br>
+    <input type="submit" value="Add Product">
+  </form>
+</body>
+</html>

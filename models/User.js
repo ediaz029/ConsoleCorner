@@ -6,6 +6,10 @@ const bcryptCompare = util.promisify(bcrypt.compare);
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  isAdmin: {
+    type: Boolean,
+    default: false
+  }
 });
 
 // Hash the password before saving the user model

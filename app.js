@@ -4,9 +4,12 @@ const path = require('path');
 const app = express();
 const mongoose = require('mongoose');
 const User = require('./models/User');
+const Product = require('./models/Product');
 const bodyParser = require('body-parser');
 app.set('view engine', 'ejs');
 const session = require('express-session');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 mongoose.connect(process.env.uri)
   .then(() => console.log('Database connected!'))
@@ -67,6 +70,7 @@ app.post('/register', function(req, res) {
           return res.render('login', { errorMessage: 'Error logging in.' });
         }
         req.session.userId = user._id;
+        req.session.isAdmin = user.isAdmin;
   
         res.redirect('/index');
       });
@@ -75,15 +79,27 @@ app.post('/register', function(req, res) {
     }
   });
 
-app.get('/index', (req, res) => {
-  if (!req.session.userId) {
-    return res.redirect('/login');
+  function checkAdmin(req, res, next) {
+    if (!req.session.isAdmin) {
+      return res.status(403).send('Forbidden');
+    }
+    next();
   }
 
-  res.set('Cache-Control', 'no-store');
+  app.get('/index', function(req, res) {
+    if (!req.session.userId) {
+      return res.redirect('/login');
+    }
+  
+    Product.find({}).then(function(products) {
+      res.set('Cache-Control', 'no-store');
+      res.render('index', { isAdmin: req.session.isAdmin, products: products });
+    }).catch(function(err) {
+      console.log(err);
+    });
+  });
 
-  res.sendFile(path.join(__dirname, 'views', 'index.html'));
-});
+  
 
 app.get('/logout', function(req, res) {
   req.session.destroy(function(err) {
@@ -99,8 +115,23 @@ app.get('/featured', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'featured.html'));
 });
 
-app.get('/admin', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'admin.html'));
+app.get('/admin/add-product', checkAdmin, function(req, res) {
+  res.render('admin/add-product');
+});
+
+app.post('/admin/add-product', checkAdmin, upload.single('image'), function(req, res) {
+  const product = new Product({
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+    imageUrl: '/uploads/' + req.file.filename
+  });
+
+  product.save().then(function() {
+    res.redirect('/index');
+  }).catch(function(err) {
+    console.log(err);
+  });
 });
 
 app.listen(4000, () => {
